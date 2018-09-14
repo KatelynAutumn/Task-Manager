@@ -8,12 +8,10 @@
 
 import Foundation
 
-print("Task Manger:")
+print("Task Manager:")
 
 let menu = Menu()
-
 menu.go()
 
-
-
-
+let edit = Edit()
+edit.go()

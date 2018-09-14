@@ -8,11 +8,67 @@
 
 import Foundation
 
+
 class Storage {
+
     
-    private var taskArray: [Task] = [Task(title: "Grocery List", details: "apples, bananas, milk, bread" )]
+    static let sharedInstance = Storage()
+    private init() {
+        
+    }
     
+    private var taskArray: [Task] = [Task(title: "Grocery List", details: "apples, bananas, milk")]
+    
+    
+    func getCompletedTasks() -> [Task] {
+        var completedTasks = [Task]()
+        
+        for task in taskArray {
+            if task.completed {
+                completedTasks.append(task)
+            }
+        }
+        return completedTasks
+    }
+    
+    
+    func getUncompletedTasks() -> [Task] {
+        var uncompletedTasks = [Task]()
+        
+        for task in taskArray {
+            if !task.completed {
+                uncompletedTasks.append(task)
+            }
+        }
+        return uncompletedTasks
+    }
+    
+    func removed() -> [Task] {
+        var removedTasks = [Task]()
+        
+        for task in taskArray {
+            if !task.removed {
+                removedTasks.append(task)
+            }
+        }
+        return removedTasks
+    }
+    
+    func Tasks() -> [Task] {
+        var Tasks = [Task]()
+        
+        for task in taskArray {
+            if task.removed {
+                Tasks.append(task)
+            }
+        }
+        return Tasks
+    }
+    
+
     func addTask() {
+        
+        let dueDate = getDueDate()
         
         print("Please enter the title of the task you'd like to create")
         var newTaskTitle = readLine()
@@ -32,55 +88,74 @@ class Storage {
         let newTask = Task(title: newTaskTitle!, details: newDetailsTitle!)
         taskArray.append(newTask)
         
-        let currentCalendar = Calendar.current
-        let dateToCompleteBy = currentCalendar.date(byAdding: .day, value: 7, to: Date())
-        let dateFormatter = DateFormatter()
-        dateFormatter.dateFormat = "EEEE, MMMM, dd, YYYY"
+        
     }
     
     func removeTask() {
-        print("Please enter the number of the game you wish to remove")
         
-        for index in 0..<taskArray.count {
-            print("\(index). \(taskArray[index].title) \(taskArray[index].details)")
+        let allTasks = Tasks()
+        listAll()
+        
+        
+        var index : Int? = nil
+        
+        repeat {
+            
+            var userInput = Int(readLine()!)
+            
+            while userInput == nil {
+                print("Invalid input. Please enter a usable index")
+                userInput = Int(readLine()!)
+            }
+            if userInput! >= 0 && userInput! <
+                allTasks.count {
+                index = userInput!
+            }  else {
+                print("Please enter a valid index.")
+                continue
+            }
+            
+        } while index == nil
+        
+        allTasks[index!].removed = false
+    }
+    
+  
+    
+    func listAll() {
+        let allGames = Tasks()
+        
+        guard allGames.count > 0 else {
+            print("There are no tasks to remove")
+            return
         }
         
-    
-        var userInput = Int(readLine()!)
-        while userInput == nil {
-            print("Invalid input. Please enter a usable index")
-            userInput = Int(readLine()!)
-            
-            taskArray.remove(at: userInput!)
+        for index in 0..<allGames.count {
+                print("\(index). \(allGames[index].title) \(allGames[index].details)")
         }
     }
+    
     
     func listUncompletedTasks() {
-        
-        
-        for task in taskArray {
-            if !task.completed {
-                print("Title: \(task.title) , Details: \(task.details)")
-                if let dateToCompleteBy = task.dateToCompleteBy {
-                    let dateFormatter = DateFormatter()
-                    dateFormatter.dateFormat = "MM/dd/yyyy"
-                    print("This task needs to be completed by \(dateFormatter.string(from: dateToCompleteBy))")
-                
-            }
-        }
-    }
-    
-    func listCompletedTasks() {
         for task in taskArray {
             if task.completed {
+                print("Title: \(task.title) , Details: \(task.details)")
+            }
+        }
+        
+    }
+    
+        
+    func listCompletedTasks() {
+        for task in taskArray {
+            if !task.completed {
                 print(task.title , task.details)
                     
                 }
             }
         }
-    }
-}
 
+}
 
 
 

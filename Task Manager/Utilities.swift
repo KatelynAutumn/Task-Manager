@@ -20,6 +20,15 @@ func validateInput(_ input: String) -> Bool {
 }
 
 
+func validateInput2(_ input: String) -> Bool {
+    let menuOptions = Array(1...4)
+    
+    guard let number = Int(input) else { return false }
+    
+    return menuOptions.contains(number)
+}
+
+
 
 func getInput() -> String {
     var input: String? = nil
@@ -38,8 +47,26 @@ func getInput() -> String {
     return input!
 }
 
-
-
+func getDueDate() -> Date {
+    var dueDate: Date?
+    
+    let dateFormatter = DateFormatter()
+    dateFormatter.dateFormat = "MM/dd/yy"
+    
+    print("Please enter the date you would like to complete this by in mm/dd/yy format:")
+    
+    repeat {
+        let input = readLine()!
+        
+        if let birthdayDate = dateFormatter.date(from: input) {
+            dueDate = birthdayDate
+        } else {
+            print("Please enter a valid date.")
+        }
+    } while dueDate == nil
+    
+    return dueDate!
+}
 
 
 

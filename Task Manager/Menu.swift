@@ -11,23 +11,28 @@ import Foundation
 class Menu {
     
     var shouldQuit = false
-    let storage = Storage()
+    let edit = Edit()
     
     func handleInput(_ input: String) {
         
         switch input {
         case "1":
-            storage.addTask()
+            Storage.sharedInstance.addTask()
+            help()
         case "2":
-            print("not yet ready")
+            Storage.sharedInstance.listAll()
+            help()
         case "3":
-            print("not yet ready")
+            Storage.sharedInstance.listUncompletedTasks()
+            help()
         case "4":
-            print("not yet ready")
+            Storage.sharedInstance.listCompletedTasks()
+            help()
         case "5":
-            print("not yet ready")
+            edit.help()
+            edit.handleInput2(input)
         case "6":
-            print("not yet ready")
+            help()
         case "7":
             quit()
         default:
@@ -58,12 +63,13 @@ class Menu {
     
     func help() {
         print("""
+
         Please enter the number of the job you wish to perform:
         1. Create New Task
         2. See All Tasks (Completed & Uncompleted)
-        3. See All Completed Tasks
-        4. See All Uncompleted Tasks
-        5. Delete A Task
+        3. See All Uncompleted Tasks
+        4. See All Completed Tasks
+        5. Edit An Existing Task
         6. Help
         7. Exit Task Manager
 

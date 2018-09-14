@@ -14,6 +14,7 @@ class Task {
     var details: String
     var completed = true
     var dateToCompleteBy: Date?
+    var removed = true
     
     init(title: String, details: String) {
         self.title = title
