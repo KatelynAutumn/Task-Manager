@@ -20,11 +20,13 @@ class Storage {
     private var taskArray: [Task] = [Task(title: "Grocery List", details: "apples, bananas, milk")]
     
     
+    
+    
     func getCompletedTasks() -> [Task] {
         var completedTasks = [Task]()
         
         for task in taskArray {
-            if task.completed {
+            if task.completed && task.removed{
                 completedTasks.append(task)
             }
         }
@@ -36,7 +38,7 @@ class Storage {
         var uncompletedTasks = [Task]()
         
         for task in taskArray {
-            if !task.completed {
+            if !task.completed && task.removed{
                 uncompletedTasks.append(task)
             }
         }
@@ -54,7 +56,7 @@ class Storage {
         return removedTasks
     }
     
-    func Tasks() -> [Task] {
+    func availableTasks() -> [Task] {
         var Tasks = [Task]()
         
         for task in taskArray {
@@ -65,6 +67,46 @@ class Storage {
         return Tasks
     }
     
+    func listAll() {
+        let allTasks = availableTasks()
+        
+        guard allTasks.count > 0 else {
+            print("There are no tasks available")
+            return
+        }
+         
+        for index in 0..<allTasks.count {
+            print("\(index). \(allTasks[index].title) \(allTasks[index].details)")
+        }
+    }
+    
+    func listCompletedTasks() {
+        let uncompletedTasks = getUncompletedTasks()
+        
+        guard uncompletedTasks.count > 0 else {
+            print("There are no tasks available")
+            return
+        }
+        
+        for index in 0..<uncompletedTasks.count {
+            print("\(index). \(uncompletedTasks[index].title) \(uncompletedTasks[index].details)")
+        }
+    }
+    
+    
+    
+    func listUncompletedTasks() {
+        let completedTasks = getCompletedTasks()
+        
+        guard completedTasks.count > 0 else {
+            print("There are no tasks available")
+            return
+        }
+        
+        for index in 0..<completedTasks.count {
+            print("\(index). \(completedTasks[index].title) \(completedTasks[index].details)")
+        }
+    }
 
     func addTask() {
         
@@ -93,7 +135,7 @@ class Storage {
     
     func removeTask() {
         
-        let allTasks = Tasks()
+        let allTasks = availableTasks()
         listAll()
         
         
@@ -120,41 +162,67 @@ class Storage {
         allTasks[index!].removed = false
     }
     
-  
-    
-    func listAll() {
-        let allGames = Tasks()
+    func checkComplete() {
         
-        guard allGames.count > 0 else {
-            print("There are no tasks to remove")
-            return
-        }
+        let allTasks = availableTasks()
+        listAll()
         
-        for index in 0..<allGames.count {
-                print("\(index). \(allGames[index].title) \(allGames[index].details)")
-        }
+        
+        var index : Int? = nil
+        
+        repeat {
+            
+            var userInput = Int(readLine()!)
+            
+            while userInput == nil {
+                print("Invalid input. Please enter a usable index")
+                userInput = Int(readLine()!)
+            }
+            if userInput! >= 0 && userInput! <
+                allTasks.count {
+                index = userInput!
+            }  else {
+                print("Please enter a valid index.")
+                continue
+            }
+            
+        } while index == nil
+        
+        allTasks[index!].completed = false
     }
     
     
-    func listUncompletedTasks() {
-        for task in taskArray {
-            if task.completed {
-                print("Title: \(task.title) , Details: \(task.details)")
-            }
-        }
+    
+    func checkUncomplete() {
+        let allTasks = getUncompletedTasks()
+        listUncompletedTasks()
         
+        
+        var index : Int? = nil
+        
+        repeat {
+            
+            var userInput = Int(readLine()!)
+            
+            while userInput == nil {
+                print("Invalid input. Please enter a usable index")
+                userInput = Int(readLine()!)
+            }
+            if userInput! >= 0 && userInput! <
+                allTasks.count {
+                index = userInput!
+            }  else {
+                print("Please enter a valid index.")
+                continue
+            }
+            
+        } while index == nil
+        
+        allTasks[index!].completed = true
     }
     
-        
-    func listCompletedTasks() {
-        for task in taskArray {
-            if !task.completed {
-                print(task.title , task.details)
-                    
-                }
-            }
-        }
-
+    
+    
 }
 
 

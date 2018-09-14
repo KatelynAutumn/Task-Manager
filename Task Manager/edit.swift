@@ -16,8 +16,6 @@ class Edit {
     func go() {
         
         help()
-        
-        repeat{
             
             var input2 = getInput()
             
@@ -27,8 +25,7 @@ class Edit {
             }
             
             handleInput2(input2)
-            
-        } while !shouldQuit
+        
     }
     
     
@@ -36,15 +33,17 @@ class Edit {
         
         switch ar {
         case "1":
-            print("not available")
+            Storage.sharedInstance.checkComplete()
+            menu.help()
         case "2":
-            print("not available")
+            Storage.sharedInstance.checkUncomplete()
+            menu.help()
         case "3":
-            print("not available")
+            Storage.sharedInstance.checkComplete()
+            menu.help()
         case "4":
             Storage.sharedInstance.removeTask()
-            help()
-            
+            menu.help()
         default:
             break
         }
@@ -55,7 +54,7 @@ class Edit {
 
         Please enter the number of the job you wish to perform:
         1. Mark A Task Complete
-        2. Mark A Task Incomplete
+        2. Mark A Task Uncomplete
         3. Edit A Task
         4. Delete A Task
         """)

@@ -29,8 +29,7 @@ class Menu {
             Storage.sharedInstance.listCompletedTasks()
             help()
         case "5":
-            edit.help()
-            edit.handleInput2(input)
+            edit.go()
         case "6":
             help()
         case "7":
