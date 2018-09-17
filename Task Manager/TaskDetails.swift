@@ -8,17 +8,20 @@
 
 import Foundation
 
+//here are all the details of the task
 
 class Task {
     var title: String
     var details: String
-    var completed = true
+    var completed = false
     var dateToCompleteBy: Date?
     var removed = true
+    var priority: String
     
-    init(title: String, details: String) {
+    init(title: String, details: String, priority: String) {
         self.title = title
         self.details = details
+        self.priority = priority
     }
 }
 

@@ -25,7 +25,6 @@ class Edit {
             }
             
             handleInput2(input2)
-        
     }
     
     
