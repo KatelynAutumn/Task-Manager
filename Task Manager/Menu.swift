@@ -10,6 +10,11 @@ import Foundation
 
 class Menu {
     
+    static let sharedInstance = Menu()
+    private init() {
+        
+    }
+    
     var shouldQuit = false
     let edit = Edit()
     

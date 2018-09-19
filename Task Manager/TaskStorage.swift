@@ -17,9 +17,13 @@ class Storage {
         
     }
     
-    private var taskArray: [Task] = [Task(title: "Grocery List", details: "apples, bananas, milk", priority: "Urgent")]
+    private var taskArray: [Task] = []
     
-    
+    func sortTasks() {
+        taskArray = taskArray.sorted { (task1, task2) -> Bool in
+            return task1.priority > task2.priority
+        }
+    }
     
     //creating an array of completed tasks
     func getCompletedTasks() -> [Task] {
@@ -48,7 +52,7 @@ class Storage {
     //creating an array of removed tasks
     func removed() -> [Task] {
         var removedTasks = [Task]()
-        
+
         for task in taskArray {
             if !task.removed {
                 removedTasks.append(task)
@@ -69,6 +73,10 @@ class Storage {
     }
     //prints an array from available tasks
     func listAll() {
+        
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "MM/dd/yy"
+        
         let allTasks = availableTasks()
         
         guard allTasks.count > 0 else {
@@ -76,12 +84,17 @@ class Storage {
             return
         }
         
+        sortTasks()
         for index in 0..<allTasks.count {
-            print("\(index). \(allTasks[index].title) \(allTasks[index].details)")
+            print("\(index). \(allTasks[index].title): \(allTasks[index].details). Priority: \(allTasks[index].priority). Due Date: \(dateFormatter.string(from: allTasks[index].dateToCompleteBy!))")
         }
     }
+    
+    
     //prints an array from getCompletedTasks
     func listCompletedTasks() {
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "MM/dd/yy"
         let completedTasks = getCompletedTasks()
         
         guard completedTasks.count > 0 else {
@@ -90,13 +103,15 @@ class Storage {
         }
         
         for index in 0..<completedTasks.count {
-            print("\(index). \(completedTasks[index].title) \(completedTasks[index].details)")
+            print("\(index). \(completedTasks[index].title) \(completedTasks[index].details). Priority: \(completedTasks[index].priority). Due Date:\(dateFormatter.string(from: completedTasks[index].dateToCompleteBy!))")
         }
     }
     
     //prints uncompleted tasks
     
     func listUncompletedTasks() {
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "MM/dd/yy"
         let uncompletedTasks = getUncompletedTasks()
         
         guard uncompletedTasks.count > 0 else {
@@ -105,18 +120,21 @@ class Storage {
         }
         
         for index in 0..<uncompletedTasks.count {
-            print("\(index). \(uncompletedTasks[index].title) \(uncompletedTasks[index].details)")
+            print("\(index). \(uncompletedTasks[index].title): \(uncompletedTasks[index].details). Priority: \(uncompletedTasks[index].priority). Due Date: \(dateFormatter.string(from: uncompletedTasks[index].dateToCompleteBy!))")
         }
     }
     
     //add task function
     func addTask() {
         
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "MM/dd/yy"
+        
         let dueDate = getDueDate()
-
-        print("What is the priority level for this task? (Critical, Important, Normal, Low)")
+        
+        print("What is the priority level for this task? (High, Medium, Low)")
         var newPriority = readLine()
-        while newPriority == nil || newPriority == ""  {
+        while newPriority == nil || newPriority == "" {
             print("Invalid title, please enter a valid title")
             newPriority = readLine()
         }
@@ -138,6 +156,7 @@ class Storage {
         }
         
         let newTask = Task(title: newTaskTitle!, details: newDetailsTitle!, priority: newPriority! )
+        newTask.dateToCompleteBy = dueDate
         taskArray.append(newTask)
         
         

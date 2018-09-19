@@ -48,18 +48,18 @@ func getInput() -> String {
 }
 
 func getDueDate() -> Date {
-    var dueDate: Date?
     
+    var dueDate: Date?
     let dateFormatter = DateFormatter()
     dateFormatter.dateFormat = "MM/dd/yy"
     
     print("Please enter the date you would like to complete this by in mm/dd/yy format:")
     
     repeat {
-        let input = readLine()!
+        let userInput = readLine()!
         
-        if let birthdayDate = dateFormatter.date(from: input) {
-            dueDate = birthdayDate
+        if let newDate = dateFormatter.date(from: userInput) {
+            dueDate = newDate
         } else {
             print("Please enter a valid date.")
         }

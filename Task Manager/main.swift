@@ -8,10 +8,23 @@
 
 import Foundation
 
-print("Task Manager:")
+print("Welcome, please enter the passphrase")
+var userInput = readLine()
+let passphrase = "secret"
 
-let menu = Menu()
-menu.go()
+repeat{
+    if userInput != passphrase {
+        print("invald entry please enter the correct passphrase")
+        userInput = readLine()
+    }
+    
+    if userInput == passphrase {
+        print("Task Manager:")
 
-let edit = Edit()
-edit.go()
+        let menu = Menu.sharedInstance
+        menu.go()
+
+        let edit = Edit()
+        edit.go()
+    }
+} while userInput != passphrase

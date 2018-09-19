@@ -33,16 +33,13 @@ class Edit {
         switch ar {
         case "1":
             Storage.sharedInstance.checkComplete()
-            menu.help()
+            Menu.sharedInstance.help()
         case "2":
             Storage.sharedInstance.checkUncomplete()
-            menu.help()
+            Menu.sharedInstance.help()
         case "3":
-            Storage.sharedInstance.checkComplete()
-            menu.help()
-        case "4":
             Storage.sharedInstance.removeTask()
-            menu.help()
+            Menu.sharedInstance.help()
         default:
             break
         }
@@ -54,8 +51,7 @@ class Edit {
         Please enter the number of the job you wish to perform:
         1. Mark A Task Complete
         2. Mark A Task Uncomplete
-        3. Edit A Task
-        4. Delete A Task
+        3. Delete A Task
         """)
         
     }
